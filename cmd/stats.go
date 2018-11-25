@@ -18,10 +18,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package main
+package cmd
 
-import "github.com/PicoSushi/twlq/cmd"
+import (
+	"errors"
+	"fmt"
 
-func main() {
-	cmd.Execute()
+	"github.com/PicoSushi/twlq/lib"
+	"github.com/spf13/cobra"
+)
+
+// statsCmd represents the stats command
+var statsCmd = &cobra.Command{
+	Use:   "stats <user>",
+	Short: "stats from Twilog",
+	Long:  `stats from Twilog`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		if len(args) < 1 {
+			return errors.New("The <query> argument is required")
+		}
+
+		return nil
+	},
+	Run: func(cmd *cobra.Command, args []string) {
+		user := args[0]
+		fmt.Println("Stats for", user)
+		twlq.Stats(user)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(statsCmd)
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// statsCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// statsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
