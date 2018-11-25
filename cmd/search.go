@@ -23,6 +23,8 @@ package cmd
 import (
 	"errors"
 	"fmt"
+
+	"github.com/PicoSushi/twlq/lib"
 	"github.com/spf13/cobra"
 )
 
@@ -39,7 +41,9 @@ var searchCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("searching <%s>\n", args[0])
+		query := args[0]
+		user := []string{""}
+		fmt.Printf("searching <%s> for user <%s>, %s!\n", query, user, twlq.Hello())
 	},
 }
 
